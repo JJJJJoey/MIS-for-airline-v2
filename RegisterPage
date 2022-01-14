@@ -1,0 +1,124 @@
+package MSIforAirline;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
+
+public class RegisterPage{
+
+	public JFrame frame;
+	private JTextField newName;
+	private JTextField newPass;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RegisterPage window = new RegisterPage();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public RegisterPage() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("register");
+		lblNewLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 28));
+		lblNewLabel.setBounds(45, 10, 151, 80);
+		frame.getContentPane().add(lblNewLabel);
+		
+		newName = new JTextField();
+		newName.setBounds(165, 120, 96, 19);
+		frame.getContentPane().add(newName);
+		newName.setColumns(10);
+		
+		newPass = new JTextField();
+		newPass.setColumns(10);
+		newPass.setBounds(165, 166, 96, 19);
+		frame.getContentPane().add(newPass);
+		
+		JLabel lblNewLabel_1 = new JLabel("New Name");
+		lblNewLabel_1.setBounds(45, 123, 77, 13);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("New Password");
+		lblNewLabel_1_1.setBounds(45, 169, 77, 16);
+		frame.getContentPane().add(lblNewLabel_1_1);
+		
+		JButton registerButton = new JButton("register");
+		registerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 String nameN = newName.getText();
+				 String passN = newPass.getText();
+                try {
+                    
+                    Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/javamysql","root", "");
+
+                    PreparedStatement st = (PreparedStatement)con.prepareStatement("INSERT INTO credentials  (`username`, `password`)  VALUES ('"+newName.getText()+"', '"+newPass.getText()+"' )");
+
+                    //st.setString(1, newName);
+                    //st.setString(2, newPass);
+                    st.executeUpdate();
+                    System.out.println("New costumer registered!");           
+                   
+                    
+
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
+                }
+                frame.dispose();
+				NewCostumer nc = new NewCostumer();
+				nc.frame.setVisible(true);
+
+            }
+			
+			
+		});
+		registerButton.setBounds(165, 210, 85, 21);
+		frame.getContentPane().add(registerButton);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				WelcomePage wp = new WelcomePage();
+				wp.frame.setVisible(true);
+			}
+		});
+		btnBack.setBounds(0, 0, 85, 21);
+		frame.getContentPane().add(btnBack);
+	}
+	
+}
