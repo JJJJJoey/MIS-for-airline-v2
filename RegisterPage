@@ -13,7 +13,9 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 
 public class RegisterPage{
@@ -21,6 +23,13 @@ public class RegisterPage{
 	public JFrame frame;
 	private JTextField newName;
 	private JTextField newPass;
+	private JLabel lblID;
+	
+	Connection con;
+	PreparedStatement pst;
+	String path=null;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -43,6 +52,7 @@ public class RegisterPage{
 	 */
 	public RegisterPage() {
 		initialize();
+		autoID();
 	}
 
 	/**
@@ -56,7 +66,7 @@ public class RegisterPage{
 		
 		JLabel lblNewLabel = new JLabel("register");
 		lblNewLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 28));
-		lblNewLabel.setBounds(45, 10, 151, 80);
+		lblNewLabel.setBounds(207, 10, 151, 80);
 		frame.getContentPane().add(lblNewLabel);
 		
 		newName = new JTextField();
@@ -80,17 +90,24 @@ public class RegisterPage{
 		JButton registerButton = new JButton("register");
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 String nameN = newName.getText();
-				 String passN = newPass.getText();
+				 String id= lblID.getText();
+				 String username = newName.getText();
+				 String password = newPass.getText();
                 try {
                     
                     Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/javamysql","root", "");
+                    
+					pst = con.prepareStatement("INSERT INTO credentials(id,username,password)values(?,?,?)");
+					//pst = con.prepareStatement("INSERT INTO flights(flight_id,airline,from_airport,to_airport,date,cost)values(?,?,?,?,?,?)");
+					pst.setString(1,id);
+					pst.setString(2,username);
+					pst.setString(3,password);
 
-                    PreparedStatement st = (PreparedStatement)con.prepareStatement("INSERT INTO credentials  (`username`, `password`)  VALUES ('"+newName.getText()+"', '"+newPass.getText()+"' )");
+                    //PreparedStatement st = (PreparedStatement)con.prepareStatement("INSERT INTO credentials  (`idcredentials`,`username`, `password`)  VALUES ('?,"+newName.getText()+"', '"+newPass.getText()+"' )");
 
                     //st.setString(1, newName);
                     //st.setString(2, newPass);
-                    st.executeUpdate();
+                    pst.executeUpdate();
                     System.out.println("New costumer registered!");           
                    
                     
@@ -119,6 +136,32 @@ public class RegisterPage{
 		});
 		btnBack.setBounds(0, 0, 85, 21);
 		frame.getContentPane().add(btnBack);
+		
+		JLabel lblID = new JLabel("New label");
+		lblID.setBounds(65, 69, 96, 21);
+		frame.getContentPane().add(lblID);
 	}
-	
+	public void autoID() {
+		   try {
+            
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javamysql","root", "");
+
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select MAX(id) from credentials");
+            rs.next();
+            rs.getString("MAX(id)");
+            if(rs.getString("MAX(id)") == null) {
+            	lblID.setText("CS001");
+         	   
+            }else {
+         	   long id = Long.parseLong(rs.getString("MAX(id)").substring(2,rs.getString("MAX(id)").length()));
+         	   id++;
+         	  lblID.setText("CS"+String.format("%03d",id));
+            }
+            
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+	}
 }
