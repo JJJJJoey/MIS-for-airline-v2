@@ -56,7 +56,6 @@ public class WelcomePage {
 				frame.dispose();
 				aw.frame.setVisible(true);
 				
-				
 			}
 		});
 		btnNewButton.setBounds(351, 10, 75, 21);
