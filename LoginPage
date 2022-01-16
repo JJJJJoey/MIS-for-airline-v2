@@ -26,6 +26,8 @@ public class LoginPage {
 	private JPasswordField pass;
 	private JButton register;
 	private JButton btnBack;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -75,8 +77,11 @@ public class LoginPage {
 					ResultSet rs = stmt.executeQuery(sql);
 					if (rs.next()) {
 						JOptionPane.showMessageDialog(null,"Login Sucessful");
+						CustomerScreen cs = new CustomerScreen();
+						frame.dispose();
+						cs.frame.setVisible(true);
 					}else {
-						JOptionPane.showMessageDialog(null,"Cant login");
+						JOptionPane.showMessageDialog(null,"Wrong Credentials, try again");
 					}
 					con.close();	
 							
@@ -84,6 +89,7 @@ public class LoginPage {
 				}catch(Exception e1 ) {
 					System.out.println(e1);
 				}
+				
 			}
 		});
 		login.setBounds(174, 113, 85, 21);
