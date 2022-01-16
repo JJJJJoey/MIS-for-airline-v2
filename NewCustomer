@@ -84,7 +84,7 @@ public class NewCostumer {
 	 */
 	public NewCostumer() {
 		initialize();
-		//autoID();
+		autoID();
 	}
 	// Establishing the connection
 	Connection con;
@@ -213,9 +213,9 @@ public class NewCostumer {
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/javamysql","root", "");
+					
 					pst = con.prepareStatement("INSERT INTO customer_info(id,first_name,last_name,passport_id,address,phone_number,date_of_birth,gender)values(?,?,?,?,?,?,?,?)");
-
-					//pst = con.prepareStatement("INSERT INTO customer_info(id,first_name,last_name,passport_id,address,phone_number,date_of_birth,gender)values(?,?,?,?,?,?,?,?)");
+					
 					pst.setString(1,id);
 					pst.setString(2,first_name);
 					pst.setString(3,last_name);
@@ -224,6 +224,8 @@ public class NewCostumer {
 					pst.setString(6,phone_number);
 					pst.setString(7,date_of_birth);
 					pst.setString(8,gender);
+					
+					
 					
 					JOptionPane.showMessageDialog(null,"registration done");
 					pst.executeUpdate();
@@ -265,6 +267,29 @@ public class NewCostumer {
 			
 		
 		
+	}
+	public void autoID() {
+		   try {
+         
+         con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javamysql","root", "");
+
+         Statement st = con.createStatement();
+         ResultSet rs = st.executeQuery("select MAX(id) from customer_info");
+         rs.next();
+         rs.getString("MAX(id)");
+         if(rs.getString("MAX(id)") == null) {
+         	lblID.setText("CS001");
+      	   
+         }else {
+      	   long id = Long.parseLong(rs.getString("MAX(id)").substring(2,rs.getString("MAX(id)").length()));
+      	   id++;
+      	  lblID.setText("CS"+String.format("%03d",id));
+         }
+         
+
+     } catch (SQLException sqlException) {
+         sqlException.printStackTrace();
+     }
 	}
 	
 }
