@@ -137,7 +137,7 @@ public class RegisterPage{
 		btnBack.setBounds(0, 0, 85, 21);
 		frame.getContentPane().add(btnBack);
 		
-		JLabel lblID = new JLabel("New label");
+		lblID = new JLabel("New label");
 		lblID.setBounds(65, 69, 96, 21);
 		frame.getContentPane().add(lblID);
 	}
