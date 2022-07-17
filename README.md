@@ -1,6 +1,6 @@
 # MIS-for-airline-v2
 A simple Java application created as an assignment.
-Created with Java in eclipse.
+Created with Java in eclipse IDE and MySQL for Backend.
 
 
 ![sql1](https://user-images.githubusercontent.com/92551036/179398069-68118bd3-05af-4136-8c34-554b4d2ee2d4.png)
