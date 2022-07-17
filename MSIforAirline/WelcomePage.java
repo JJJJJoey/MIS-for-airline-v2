@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import MSIforAirline.LoginPage;
-import MSIforAirline.RegisterPage;
+//import MSIforAirline.LoginPage;
+//import MSIforAirline.RegisterPage;
 //import testLogin3.Ticket;
 
 import java.awt.Font;
@@ -48,36 +48,36 @@ public class WelcomePage {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JButton btnNewButton = new JButton("admin");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdminWelcome aw = new AdminWelcome();
 				frame.dispose();
 				aw.frame.setVisible(true);
-				
+
 			}
 		});
 		btnNewButton.setBounds(351, 10, 75, 21);
 		frame.getContentPane().add(btnNewButton);
-		
+
 		JLabel lblNewLabel = new JLabel("Welcome!");
 		lblNewLabel.setFont(new Font("Bahnschrift", Font.PLAIN, 16));
 		lblNewLabel.setBounds(175, 76, 75, 21);
 		frame.getContentPane().add(lblNewLabel);
-		
+
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginPage lp = new LoginPage();
 				frame.dispose();
 				lp.frame.setVisible(true);
-				
+
 			}
 		});
 		btnLogin.setBounds(56, 145, 85, 21);
 		frame.getContentPane().add(btnLogin);
-		
+
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -85,7 +85,7 @@ public class WelcomePage {
 				frame.dispose();
 				RegisterPage nr = new RegisterPage();
 				nr.frame.setVisible(true);
-					
+
 			}
 		});
 		btnRegister.setBounds(280, 145, 85, 21);
